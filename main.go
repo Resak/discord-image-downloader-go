@@ -311,8 +311,6 @@ func main() {
 		u.Username)
 	DiscordUserId = u.ID
 
-	updateDiscordStatus()
-
 	// keep program running until CTRL-C is pressed.
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
@@ -1566,7 +1564,6 @@ func downloadFromUrl(dUrl string, filename string, path string, channelId string
 		fmt.Println("Error while writing to database", err)
 	}
 
-	updateDiscordStatus()
 	return true
 }
 
@@ -1656,10 +1653,6 @@ type PairList []Pair
 func (p PairList) Len() int           { return len(p) }
 func (p PairList) Less(i, j int) bool { return p[i].Value < p[j].Value }
 func (p PairList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-
-func updateDiscordStatus() {
-	dg.UpdateStatus(0, fmt.Sprintf("%d pictures downloaded", countDownloadedImages()))
-}
 
 func Pagify(text string, delimiter string) []string {
 	result := make([]string, 0)
